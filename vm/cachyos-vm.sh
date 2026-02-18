@@ -2,7 +2,7 @@
 
 # Copyright (c) 2021-2026 community-scripts ORG
 # Author: MickLesk (CanbiZ)
-# License: MIT | https://github.com/community-scripts/ProxmoxVED/raw/main/LICENSE
+# License: MIT | https://github.com/pfassina/ProxmoxVED/raw/main/LICENSE
 
 # ==============================================================================
 # CachyOS VM - Creates a CachyOS Virtual Machine
@@ -10,7 +10,7 @@
 # packages, custom kernels, and various desktop environment options.
 # ==============================================================================
 
-source /dev/stdin <<<$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVED/main/misc/api.func)
+source /dev/stdin <<<$(curl -fsSL https://raw.githubusercontent.com/pfassina/ProxmoxVED/main/misc/api.func)
 
 function header_info {
   clear

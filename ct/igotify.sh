@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 source <(curl -fsSL https://raw.githubusercontent.com/pfassina/ProxmoxVED/main/misc/build.func)
 # Copyright (c) 2021-2026 community-scripts ORG
-# Author: community-scripts
+# Author: pfassina
 # License: MIT | https://github.com/pfassina/ProxmoxVED/raw/main/LICENSE
-# Source: https://github.com/nicotsx/zerobyte
+# Source: https://github.com/androidseb25/iGotify-Notification-Assistent
 
-APP="Zerobyte"
-var_tags="${var_tags:-backup;encryption;restic}"
+APP="iGotify"
+var_tags="${var_tags:-notifications;gotify}"
 var_cpu="${var_cpu:-2}"
 var_ram="${var_ram:-2048}"
-var_disk="${var_disk:-10}"
+var_disk="${var_disk:-4}"
 var_os="${var_os:-debian}"
 var_version="${var_version:-13}"
 var_unprivileged="${var_unprivileged:-1}"
@@ -24,35 +24,29 @@ function update_script() {
   check_container_storage
   check_container_resources
 
-  if [[ ! -d /opt/zerobyte ]]; then
+  if [[ ! -d /opt/igotify ]]; then
     msg_error "No ${APP} Installation Found!"
     exit
   fi
 
-  if check_for_gh_release "zerobyte" "nicotsx/zerobyte"; then
+  if check_for_gh_release "igotify" "androidseb25/iGotify-Notification-Assistent"; then
     msg_info "Stopping Service"
-    systemctl stop zerobyte
+    systemctl stop igotify
     msg_ok "Stopped Service"
 
     msg_info "Backing up Configuration"
-    cp /opt/zerobyte/.env /opt/zerobyte.env.bak
+    cp /opt/igotify/.env /opt/igotify.env.bak
     msg_ok "Backed up Configuration"
 
-    CLEAN_INSTALL=1 fetch_and_deploy_gh_release "zerobyte" "nicotsx/zerobyte" "tarball"
-
-    msg_info "Building Zerobyte"
-    cd /opt/zerobyte
-    $STD bun install
-    $STD bun run build
-    msg_ok "Built Zerobyte"
+    CLEAN_INSTALL=1 fetch_and_deploy_gh_release "igotify" "androidseb25/iGotify-Notification-Assistent" "prebuild" "latest" "/opt/igotify" "iGotify-Notification-Service-amd64-v*.zip"
 
     msg_info "Restoring Configuration"
-    cp /opt/zerobyte.env.bak /opt/zerobyte/.env
-    rm -f /opt/zerobyte.env.bak
+    cp /opt/igotify.env.bak /opt/igotify/.env
+    rm -f /opt/igotify.env.bak
     msg_ok "Restored Configuration"
 
     msg_info "Starting Service"
-    systemctl start zerobyte
+    systemctl start igotify
     msg_ok "Started Service"
     msg_ok "Updated successfully!"
   fi
@@ -66,4 +60,4 @@ description
 msg_ok "Completed Successfully!\n"
 echo -e "${CREATING}${GN}${APP} setup has been successfully initialized!${CL}"
 echo -e "${INFO}${YW} Access it using the following URL:${CL}"
-echo -e "${TAB}${GATEWAY}${BGN}http://${IP}:4096${CL}"
+echo -e "${TAB}${GATEWAY}${BGN}http://${IP}:8681${CL}"
