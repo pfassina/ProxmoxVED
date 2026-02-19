@@ -28,8 +28,12 @@ fetch_and_deploy_gh_release "igotify" "androidseb25/iGotify-Notification-Assiste
 
 msg_info "Setting up iGotify"
 cat <<EOF >/opt/igotify/.env
-ASPNETCORE_URLS=http://0.0.0.0:8681
+ASPNETCORE_URLS=http://0.0.0.0:80
 ASPNETCORE_ENVIRONMENT=Production
+GOTIFY_DEFAULTUSER_PASS=
+GOTIFY_URLS=
+GOTIFY_CLIENT_TOKENS=
+SECNTFY_TOKENS=
 EOF
 msg_ok "Set up iGotify"
 
@@ -45,6 +49,8 @@ WorkingDirectory=/opt/igotify
 ExecStart=/usr/bin/dotnet "/opt/igotify/iGotify Notification Assist.dll"
 Restart=always
 RestartSec=10
+KillSignal=SIGINT
+TimeoutStopSec=10
 
 [Install]
 WantedBy=multi-user.target
